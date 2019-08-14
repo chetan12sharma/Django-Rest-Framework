@@ -4,7 +4,7 @@ from django.db import models
 class Common(models.Model):
 
     name = models.CharField(("name"), max_length=250,
-                            default='', blank=False)
+                            default='', blank=False, unique=True)
     inserted_timestamp = models.DateTimeField(
         auto_now=False, auto_now_add=True)
 

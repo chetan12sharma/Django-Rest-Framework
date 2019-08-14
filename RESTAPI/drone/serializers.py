@@ -1,15 +1,16 @@
 from rest_framework import serializers
-from models import Competition, Drone, DroneCategory, Pilot
-# from .views import
+from .models import Competition, Drone, DroneCategory, Pilot
+from .views import *
 
 
 class DroneCategorySerializer(serializers.HyperlinkedModelSerializer):
-    verbose_drone = serializers.HyperlinkedRelatedField(
-        many=True, read_only=True, view_name='drone_details')
+    drones = serializers.HyperlinkedRelatedField(
+        many=True, read_only=True, view_name='drone-detail')
 
     class Meta:
         model = DroneCategory
-        fields = ('url', 'pk', 'name', 'verbose_drone')
+        # fields = ("__all__")
+        fields = ('url', 'pk', 'name', 'drones')
 
 
 class DroneSerializer(serializers.HyperlinkedModelSerializer):
@@ -26,7 +27,7 @@ class DroneSerializer(serializers.HyperlinkedModelSerializer):
             'has_it_competed', 'inserted_timestamp',)
 
 
-class CompetitionSerailizer(serializers.HyperlinkedModelSerializer):
+class CompetitionSerializer(serializers.HyperlinkedModelSerializer):
     drone = DroneSerializer()
 
     class Meta:
@@ -35,14 +36,14 @@ class CompetitionSerailizer(serializers.HyperlinkedModelSerializer):
             'url',
             'pk',
             'distance_in_feet',
-            'distance_achievement_date',
+            'distance_achivement_date',
             'drone',)
 
 
 class PilotSerializer(serializers.HyperlinkedModelSerializer):
-    competitions = serializers.HyperlinkedModelSerializer(
+    competitions = CompetitionSerializer(
         many=True, read_only=True)
-    gender = serializers.ChoiceField(choices=Pilot.choices)
+    gender = serializers.ChoiceField(choices=Pilot.GENDER_CHOICE)
     gender_description = serializers.CharField(
         source='get_gender_display', read_only=True)
 
@@ -53,9 +54,9 @@ class PilotSerializer(serializers.HyperlinkedModelSerializer):
             'name',
             'gender',
             'gender_description',
-            'races_count',
+            'race_count',
             'inserted_timestamp',
-            'competitions'
+            'competitions',
         )
 
 
