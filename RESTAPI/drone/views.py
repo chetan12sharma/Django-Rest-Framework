@@ -1,22 +1,18 @@
 from django.shortcuts import render
-from .models import Drone, DroneCategory, Pilot, Competition
-from .serializers import (
-    DroneSerializer,
-    PilotSerializer,
-    PilotCompetitionSerializer,
-    DroneCategorySerializer,
-)
-from rest_framework.response import Response
-from rest_framework import generics
-from rest_framework.reverse import reverse
+# !For filtering seaching and ordering
+from django_filters import (AllValuesFilter, DateTimeFilter, FilterSet,
+                            NumberFilter)
 # * For authentication and permission
-from rest_framework import permissions
+from rest_framework import generics, permissions
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 # * For basic authentication and session authentication
 from .custompermission import IsCurrentUserOwnerOrReadOnly
-
-# !For filtering seaching and ordering
-from django_filters import AllValuesFilter, NumberFilter, DateTimeFilter
-from django_filters import FilterSet
+from .models import Competition, Drone, DroneCategory, Pilot
+from .serializers import (DroneCategorySerializer, DroneSerializer,
+                          PilotCompetitionSerializer, PilotSerializer)
 
 
 class ApiRoot(generics.GenericAPIView):
@@ -71,6 +67,12 @@ class PilotList(generics.ListCreateAPIView):
         'name',
         'race_count'
     )
+    # authentication_classes = (
+    #     TokenAuthentication,
+    # )
+    # permission_classes = (
+    #     IsAuthenticated
+    # )
 
 
 # !for Chetan
@@ -84,6 +86,12 @@ class PilotDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Pilot.objects.all()
     serializer_class = PilotSerializer
     name = 'pilot-detail'
+    # authentication_classes = (
+    #     TokenAuthentication,
+    # )
+    # permission_classes = (
+    #     IsAuthenticated
+    # )
 
 
 class CompetitionList(generics.ListCreateAPIView):

@@ -33,6 +33,7 @@ class Drone(Common):
         "auth.User",
         related_name='drones',
         on_delete=models.CASCADE)
+
     manufacturing_date = models.DateField(("m_dates"))
     has_it_competed = models.BooleanField(default=False)
 

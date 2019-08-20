@@ -20,7 +20,16 @@
 # Example ::
 # pilot = serializers.SlugRelatedField(
 #         queryset=Pilot.objects.all(), slug_field='name')
-# this is used for creating the dropdown of the pilot list
+# The SlugRelatedField allows us to change the target of the
+# model field from id to username.
+# example:
+# ! 1.
+# drone = Drone.object.all() output: drone: will_show_id
+# ! 2.
+# drone = serializers.SlugRelatedField(
+#     queryset=Drone.objects.all(), slug_field='name')
+# * output: drone: will_show_username
+
 # slug_field = "name" => it is used for display the value
 
 # ? what is rest_framework.filters.orderingfilter and searchfilter ????
@@ -35,6 +44,7 @@
 # Serializers allow complex data such as querysets and model instances
 # to be converted to native Python datatypes that can then be easily
 # rendered into JSON, XML or other content types
+# json to python model and vice-versa
 
 
 # ? related_name ??
@@ -58,5 +68,6 @@
 
 # !DUNZO APP
 # CT500
+
 # !cure fit
 # CULTCTGZVR45

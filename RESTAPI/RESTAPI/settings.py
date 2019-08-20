@@ -137,9 +137,10 @@ REST_FRAMEWORK = {
         'rest_framework.filters.SearchFilter',  # for searching
     ),
     # ! for basic authentication or session authentication
-    # 'DEFAULT_AUTHENTICATION_CLASSESS': (
-    #     'rest_framework.authentication.BasicAuthentication',
-    #     'rest_framework.authentication.TokenAuthentication',
-    # ),
+    'DEFAULT_AUTHENTICATION_CLASSESS': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
 
 }

@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from .models import Competition, Drone, DroneCategory, Pilot
 from .views import *
+from django.utils.translation import ugettext_lazy as _
 
 
 class DroneCategorySerializer(serializers.HyperlinkedModelSerializer):
@@ -67,8 +68,9 @@ class PilotSerializer(serializers.HyperlinkedModelSerializer):
 class PilotCompetitionSerializer(serializers.ModelSerializer):
     pilot = serializers.SlugRelatedField(
         queryset=Pilot.objects.all(), slug_field='name')
-    drone = serializers.SlugRelatedField(
-        queryset=Drone.objects.all(), slug_field='name')
+    # drone = serializers.SlugRelatedField(
+    #     queryset=Drone.objects.all(), slug_field='name')
+    drone = Drone.objects.all()
 
     class Meta:
         model = Competition
