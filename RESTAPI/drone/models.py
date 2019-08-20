@@ -29,7 +29,10 @@ class Drone(Common):
         ),
         related_name='drones',
         on_delete=models.CASCADE)
-
+    owner = models.ForeignKey(
+        "auth.User",
+        related_name='drones',
+        on_delete=models.CASCADE)
     manufacturing_date = models.DateField(("m_dates"))
     has_it_competed = models.BooleanField(default=False)
 

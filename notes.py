@@ -29,3 +29,34 @@
 
 
 # ? what is rest_framework.filters searchfilter ????
+
+
+# ? Why do we need serializer in Django?
+# Serializers allow complex data such as querysets and model instances
+# to be converted to native Python datatypes that can then be easily
+# rendered into JSON, XML or other content types
+
+
+# ? related_name ??
+
+# owner = models.ForeignKey(
+# 'auth.User',
+# related_name='drones',
+# on_delete=models.CASCADE)
+
+# The 'drones' value specified for the related_name argument creates a
+# backward relation from the User to the Drone model. Remember that this
+# value indicates the name to use for the relation from the related
+# User objectback to a Drone object. This way, we will be able
+# to access all the drones owned by a specific user.
+
+
+# linear-gradient(114.1501577487deg, #18b2b8 4.9296141814%, #245fc7 97.838894682%)
+
+# !myntra code
+# 8HGYYKLU8WQ
+
+# !DUNZO APP
+# CT500
+# !cure fit
+# CULTCTGZVR45

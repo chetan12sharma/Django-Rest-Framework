@@ -9,10 +9,14 @@ from .serializers import (
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.reverse import reverse
+# * For authentication and permission
+from rest_framework import permissions
+# * For basic authentication and session authentication
+from .custompermission import IsCurrentUserOwnerOrReadOnly
 
-# For filtering seaching and ordering
+# !For filtering seaching and ordering
 from django_filters import AllValuesFilter, NumberFilter, DateTimeFilter
-from rest_framework import filters
+from django_filters import FilterSet
 
 
 class ApiRoot(generics.GenericAPIView):
@@ -58,15 +62,22 @@ class PilotList(generics.ListCreateAPIView):
     filter_fields = (
         'name',
         'gender',
-        'races_count',
+        'race_count',
     )
     search_fields = (
         '^name',
     )
     ordering_fields = (
         'name',
-        'races_count'
+        'race_count'
     )
+
+
+# !for Chetan
+# <Token: 27f358b52bad66bc209758a61df8ce45cbeed315>
+
+# !For Neeraj
+# <Token: e71aafd7177712f6855b6374a8504d9e7affa47c >
 
 
 class PilotDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -79,6 +90,18 @@ class CompetitionList(generics.ListCreateAPIView):
     queryset = Competition.objects.all()
     serializer_class = PilotCompetitionSerializer
     name = 'competition-list'
+    filter_fields = (
+        'distance_in_feet',
+        'distance_achivement_date',
+        'drone',
+        'pilot',
+    )
+    search_fields = (
+        '^name',
+    )
+    ordering_fields = (
+        'name',
+    )
 
 
 class CompetitionDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -91,6 +114,7 @@ class DroneList(generics.ListCreateAPIView):
     queryset = Drone.objects.all()
     serializer_class = DroneSerializer
     name = "drone-list"
+
     filter_fields = (
         'name',
         'drone_category',
@@ -105,8 +129,21 @@ class DroneList(generics.ListCreateAPIView):
         'manufacturing_date',
     )
 
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        IsCurrentUserOwnerOrReadOnly
+    )
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
 
 class DroneDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Drone.objects.all()
     serializer_class = DroneSerializer
     name = "drone-detail"
+
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        IsCurrentUserOwnerOrReadOnly
+    )

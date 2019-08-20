@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drone',
     'django_filters',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -135,4 +136,10 @@ REST_FRAMEWORK = {
         'rest_framework.filters.OrderingFilter',  # for ordering
         'rest_framework.filters.SearchFilter',  # for searching
     ),
+    # ! for basic authentication or session authentication
+    # 'DEFAULT_AUTHENTICATION_CLASSESS': (
+    #     'rest_framework.authentication.BasicAuthentication',
+    #     'rest_framework.authentication.TokenAuthentication',
+    # ),
+
 }
